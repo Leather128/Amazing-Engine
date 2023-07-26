@@ -4362,23 +4362,9 @@ class PlayState extends MusicBeatState
 						}
 					}
 
-					var strumGroup:FlxTypedGroup<StrumNote> = daNote.strumGroup;
-					var strum:StrumNote = strumGroup.members[daNote.noteData];
-					var strumX:Float = strum.x;
-					var strumY:Float = strum.y;
-					var strumAngle:Float = strum.angle;
-					var strumDirection:Float = strum.direction;
-					var strumAlpha:Float = strum.alpha;
-					var strumScroll:Bool = strum.downScroll;
+					var strum:StrumNote = daNote.strumGroup.members[daNote.noteData];
 
-					strumX += daNote.offsetX;
-					strumY += daNote.offsetY;
-					strumAngle += daNote.offsetAngle;
-					strumAlpha *= daNote.multAlpha;
-
-					// daNote.y = (strumY + 0.45 * (Conductor.songPosition - daNote.strumTime) * songSpeed);
-					// strumScroll = downScroll setting :3
-					daNote.distance = (0.45 * (Conductor.songPosition - daNote.strumTime) * songSpeed * daNote.multSpeed) * (strumScroll ? 1 : -1);
+					daNote.distance = (0.45 * (Conductor.songPosition - daNote.strumTime) * songSpeed * daNote.multSpeed) * (strum.downScroll ? 1 : -1);
 
 					// CHANGE MANIA PATCH
 					// if (daNote.mania != mania && daNote.animation.curAnim.name != null)
@@ -4386,26 +4372,26 @@ class PlayState extends MusicBeatState
 					// 	daNote.mania = mania;
 					// }
 
-					var angleDir:Float = strumDirection != 0 ? (strumDirection * Math.PI / 180) : 0;
+					var angleDir:Float = strum.direction != 90 ? (strum.direction * Math.PI / 180) : 1.57; // approx 1.57079632679
 
 					if (daNote.isSustainNote)
-						daNote.angle = strumDirection - 90;
+						daNote.angle = strum.direction - 90;
 
 					if (daNote.copyAngle)
-						daNote.angle = strumDirection - 90 + strumAngle;
+						daNote.angle = strum.direction - 90 + (strum.angle + daNote.offsetAngle);
 
 					if (daNote.copyAlpha)
-						daNote.alpha = strumAlpha;
+						daNote.alpha = strum.alpha * daNote.multAlpha;
 
 					if (daNote.copyX)
-						daNote.x = strumX + (angleDir != 0 ? Math.cos(angleDir) : 0) * daNote.distance;
+						daNote.x = (strum.x + daNote.offsetX) + (angleDir != 0 ? Math.cos(angleDir) : 0) * daNote.distance;
 
 					if (daNote.copyY)
 					{
-						daNote.y = strumY + (angleDir != 0 ? Math.sin(angleDir) : 0) * daNote.distance;
+						daNote.y = (strum.y + daNote.offsetY) + (angleDir != 0 ? Math.sin(angleDir) : 0) * daNote.distance;
 
 						// Jesus fuck this took me so much mother fucking time AAAAAAAAAA
-						if (strumScroll && daNote.isSustainNote)
+						if (strum.downScroll && daNote.isSustainNote)
 						{
 							if (daNote.animation.curAnim.name.endsWith('tail'))
 							{
@@ -4437,13 +4423,13 @@ class PlayState extends MusicBeatState
 						return;
 					}
 
-					var center:Float = strumY + (Note.swagWidth / 2);
-					if (strumGroup.members[daNote.noteData].sustainReduce
+					var center:Float = (strum.y + daNote.offsetY) + (Note.swagWidth / 2);
+					if (daNote.strumGroup.members[daNote.noteData].sustainReduce
 						&& daNote.isSustainNote
 						&& (daNote.mustPress || !daNote.ignoreNote)
 						&& (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
 					{
-						if (strumScroll)
+						if (strum.downScroll)
 						{
 							if ((daNote.y - daNote.offset.y) * daNote.scale.y + daNote.height >= center)
 							{
