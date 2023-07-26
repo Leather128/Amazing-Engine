@@ -4381,10 +4381,10 @@ class PlayState extends MusicBeatState
 					daNote.distance = (0.45 * (Conductor.songPosition - daNote.strumTime) * songSpeed * daNote.multSpeed) * (strumScroll ? 1 : -1);
 
 					// CHANGE MANIA PATCH
-					if (daNote.mania != mania && daNote.animation.curAnim.name != null)
-					{
-						daNote.mania = mania;
-					}
+					// if (daNote.mania != mania && daNote.animation.curAnim.name != null)
+					// {
+					// 	daNote.mania = mania;
+					// }
 
 					var angleDir:Float = strumDirection != 0 ? (strumDirection * Math.PI / 180) : 0;
 
