@@ -1,6 +1,6 @@
 package;
 
-import flixel.graphics.FlxGraphic;
+#if !macro
 import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxState;
@@ -10,8 +10,7 @@ import openfl.display.Sprite;
 import openfl.events.Event;
 import openfl.display.StageScaleMode;
 import openfl.utils.Assets;
-
-//crash handler stuff
+// crash handler stuff
 #if CRASH_HANDLER
 import lime.app.Application;
 import openfl.events.UncaughtErrorEvent;
@@ -24,12 +23,11 @@ import sys.FileSystem;
 import sys.io.File;
 import sys.io.Process;
 #end
-
 // Display stuff
 import display.FPSCounter;
 import display.Stats;
-//import display.Stats;
 
+// import display.Stats;
 using StringTools;
 
 class Main extends Sprite
@@ -41,10 +39,10 @@ class Main extends Sprite
 	var framerate:Int = 60; // How many frames per second the game should run at.
 	var skipSplash:Bool = true; // Whether to skip the flixel splash screen that appears in release mode.
 	var startFullscreen:Bool = false; // Whether to start the game in fullscreen on desktop targets
-	
+
 	// Display stuff
-	var fpsCounter:FPSCounter;
-	var stats:Stats;
+	public static var fpsCounter:FPSCounter;
+	public static var stats:Stats;
 
 	public static var audioDisconnected:Bool = false;
 	public static var changeID:Int = 0;
@@ -88,7 +86,7 @@ class Main extends Sprite
 		var res = ClientPrefs.screenRes.split('x');
 		gameWidth = Std.parseInt(res[0]);
 		gameHeight = Std.parseInt(res[1]);
-		
+
 		if (zoom == -1)
 		{
 			var ratioX:Float = stageWidth / gameWidth;
@@ -98,12 +96,14 @@ class Main extends Sprite
 			gameHeight = Math.ceil(stageHeight / zoom);
 		}
 
-		//ClientPrefs.loadDefaultKeys();
+		// ClientPrefs.loadDefaultKeys();
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, #if (flixel < "5.0.0") zoom, #end framerate, framerate, skipSplash, startFullscreen));
 		#if desktop FlxG.autoPause = ClientPrefs.autoPause; #end
-		#if html5 FlxG.autoPause = false;
-		FlxG.mouse.visible = false; #end
-		
+		#if html5
+		FlxG.autoPause = false;
+		FlxG.mouse.visible = false;
+		#end
+
 		#if CRASH_HANDLER
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
 		#end
@@ -122,7 +122,7 @@ class Main extends Sprite
 		#if debug
 		stats = new Stats(0, 0, CoolUtil.getFontFromOpenflText('lunchtype21', 'ttf'));
 		addChild(stats);
-		//stats.visible = false;
+		// stats.visible = false;
 		#end
 
 		Lib.current.stage.align = "tl";
@@ -147,11 +147,13 @@ class Main extends Sprite
 					Sys.println(stackItem);
 			}
 		}
-		FuckState.FUCK(e,message);
+		FuckState.FUCK(e, message);
 	}
 
-	public static function forceStateSwitch(state:FlxState){ // Might be a bad idea but allows an error to force a state change to Mainmenu instead of softlocking
+	public static function forceStateSwitch(state:FlxState)
+	{ // Might be a bad idea but allows an error to force a state change to Mainmenu instead of softlocking
 		FlxG.switchState(state);
 	}
 	#end
 }
+#end

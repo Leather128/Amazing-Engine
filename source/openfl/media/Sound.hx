@@ -600,7 +600,9 @@ class Sound extends EventDispatcher
 	}
 
 	var changeID:Int = 0;
-	public function regen() {
+
+	public function regen()
+	{
 		var audioBuffer = new AudioBuffer();
 		audioBuffer.bitsPerSample = __buffer.bitsPerSample;
 		audioBuffer.channels = __buffer.channels;
@@ -636,10 +638,13 @@ class Sound extends EventDispatcher
 			return null;
 		}
 
-		if (changeID < Main.changeID) {
+		#if !macro
+		if (changeID < Main.changeID)
+		{
 			changeID = Main.changeID;
 			regen();
 		}
+		#end
 
 		if (sndTransform == null)
 		{
@@ -652,14 +657,17 @@ class Sound extends EventDispatcher
 
 		var pan = SoundMixer.__soundTransform.pan + sndTransform.pan;
 
-		if (pan > 1) pan = 1;
-		else if (pan < -1) pan = -1;
+		if (pan > 1)
+			pan = 1;
+		else if (pan < -1)
+			pan = -1;
 
 		var volume = SoundMixer.__soundTransform.volume * sndTransform.volume;
 
 		var source = new AudioSource(__buffer);
 		source.offset = Std.int(startTime);
-		if (loops > 1) source.loops = loops - 1;
+		if (loops > 1)
+			source.loops = loops - 1;
 
 		source.gain = volume;
 
@@ -698,8 +706,8 @@ class Sound extends EventDispatcher
 			}
 			else if (__buffer.__srcVorbisFile != null)
 			{
-				//var samples = Int64.toInt(__buffer.__srcVorbisFile.pcmTotal());
-				//return Std.int(samples / __buffer.sampleRate * 1000);
+				// var samples = Int64.toInt(__buffer.__srcVorbisFile.pcmTotal());
+				// return Std.int(samples / __buffer.sampleRate * 1000);
 				var samples = __buffer.__srcVorbisFile.pcmTotal();
 				var value = Int64.fromFloat(__buffer.__srcVorbisFile.timeTotal()) * 1000;
 				return Int64.toInt(value);

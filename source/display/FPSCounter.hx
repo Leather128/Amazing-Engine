@@ -7,26 +7,21 @@ import openfl.text.TextFormat;
 import openfl.utils.Assets;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
-
 #if flash
 import openfl.Lib;
 #end
-
 #if openfl
 import openfl.system.System;
 #end
-
 #if cpp
 import e.Memory;
 #end
-
 import flixel.FlxG;
 
 #if !openfl_debug
 @:fileXml('tags="haxe,release"')
 @:noDebug
 #end
-
 class FPSCounter extends TextField
 {
 	// Static variables
@@ -55,14 +50,19 @@ class FPSCounter extends TextField
 		addEventListener(Event.ENTER_FRAME, (e:Event) -> enterFrame(Sys.time()));
 	}
 
-	public function enterFrame(deltaTime:Float) {
+	public function enterFrame(deltaTime:Float)
+	{
+		if (!visible)
+		{
+			return;
+		}
+
 		updateFPS(deltaTime);
 		updateMemory();
 		text = (ClientPrefs.showFPS ? FPSText : '') + (ClientPrefs.showMEM ? MemoryText : '');
 	}
 
 	// Frames Counter
-
 	var FPS:Float;
 	var FPSText:String;
 	var currentFps:Float;
@@ -70,7 +70,8 @@ class FPSCounter extends TextField
 	var currentTime:Float;
 	var times:Array<Date>;
 
-	function drawFPS() {
+	function drawFPS()
+	{
 		currentTime = 0;
 		times = [];
 	}
@@ -80,11 +81,14 @@ class FPSCounter extends TextField
 	var maxMs:Float = 16;
 
 	// I wrote this from scratch
-	function updateFPS(deltaTime:Float) {
+	function updateFPS(deltaTime:Float)
+	{
 		currentTime += deltaTime;
 		times.push(Date.now());
-		for (i in 0...times.length) {
-			if (times[i] != null && times[i].getTime() + 1000 < Date.now().getTime()) {
+		for (i in 0...times.length)
+		{
+			if (times[i] != null && times[i].getTime() + 1000 < Date.now().getTime())
+			{
 				times.remove(times[i]);
 			}
 		}
@@ -93,7 +97,8 @@ class FPSCounter extends TextField
 
 		intervalTime = 1 / currentFps;
 		ms = Std.int(intervalTime * 1000);
-		if (ms < maxMs) maxMs = ms;
+		if (ms < maxMs)
+			maxMs = ms;
 		frameTime = ms;
 
 		FPSText = 'FPS: ' + currentFps + '\n - Time: $ms ms (Max: $maxMs ms)';
@@ -101,25 +106,29 @@ class FPSCounter extends TextField
 	}
 
 	// Smooth fps color change
-	function updateFPSTextColor() {
+	function updateFPSTextColor()
+	{
 		// Testing...
-		//trace(Math.pow(10, 9));
+		// trace(Math.pow(10, 9));
 		// Math.pow(10, 9) * 4
-		if (currentFps <= times.length / 2) {
+		if (currentFps <= times.length / 2)
+		{
 			textColor = 0xFFFF0000;
-		} else {
+		}
+		else
+		{
 			textColor = 0xFFFFFFFF;
 		}
 	}
 
 	// Memory Counter
-
 	var PeakMemory:Float;
 	var CurrentMemory:Float;
 	var TotalMemory:Float;
 	var GarbageMemory:Float;
 
-	function drawMemory() {
+	function drawMemory()
+	{
 		PeakMemory = 0;
 		CurrentMemory = 0;
 		TotalMemory = 0;
@@ -129,28 +138,30 @@ class FPSCounter extends TextField
 	var MemoryText:String;
 
 	/* var MemoryString:String;
-	var CurrentMemoryString:String;
-	var PeakMemoryString:String;
-	var GarbageMemoryString:String; */
-
+		var CurrentMemoryString:String;
+		var PeakMemoryString:String;
+		var GarbageMemoryString:String; */
 	var overloaded = false;
-	function updateMemory() {
+
+	function updateMemory()
+	{
 		CurrentMemory = Memory.getCurrentUsage();
 		PeakMemory = Memory.getPeakUsage();
 		TotalMemory = CurrentMemory + PeakMemory;
 		GarbageMemory = cpp.vm.Gc.memUsage();
 		memory = TotalMemory;
 
-		MemoryText = (ClientPrefs.showFPS ? '\n' : '') + 'Memory: ${CoolUtil.formatBytes(TotalMemory / 2)}\n- Current: ${CoolUtil.formatBytes(CurrentMemory / 2)}, Peak: ${CoolUtil.formatBytes(PeakMemory / 2)}\nGarbage Memory: ${CoolUtil.formatBytes(GarbageMemory)} Freed';
+		MemoryText = (ClientPrefs.showFPS ? '\n' : '')
+			+
+			'Memory: ${CoolUtil.formatBytes(TotalMemory / 2)}\n- Current: ${CoolUtil.formatBytes(CurrentMemory / 2)}, Peak: ${CoolUtil.formatBytes(PeakMemory / 2)}\nGarbage Memory: ${CoolUtil.formatBytes(GarbageMemory)} Freed';
 	}
-
 	/*
-	function checkMemory() {
-		'${CoolUtil.formatBytes(CurrentMemory)} / ${CoolUtil.formatBytes(Memory.getPeakUsage())}';
-	}
+		function checkMemory() {
+			'${CoolUtil.formatBytes(CurrentMemory)} / ${CoolUtil.formatBytes(Memory.getPeakUsage())}';
+		}
 
-	function convertToMemoryUnits(baseFloat:Float, whatToConvert:Float, units:String):String {
-		return HelperFunctions.truncateFloat(baseFloat / whatToConvert, 2) + ' $units';
-	}
-	*/
+		function convertToMemoryUnits(baseFloat:Float, whatToConvert:Float, units:String):String {
+			return HelperFunctions.truncateFloat(baseFloat / whatToConvert, 2) + ' $units';
+		}
+	 */
 }
