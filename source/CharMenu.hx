@@ -38,16 +38,16 @@ class CharMenu extends MusicBeatState
 	public var boyfriendGroup:FlxSpriteGroup;
 
 	// Selectable Character Variables
-	var selectableCharacters:Array<String> = ['bf', 'bf-christmas', 'MellyBF'/*, 'JBBF'*/]; // Currently Selectable characters
-	var selectableCharactersNames:Array<String> = ['Default Character', 'Week 5 Boyfriend', 'Boyfriend but Black (Melly)'/*, 'Boyfriend but Mexican (JB)'*/]; // Characters names (i demand them to be actually funny and anyone who says otherwise probably isn't black/mexican - melly)
-	var selectableCharactersColors:Array<FlxColor> = [0xFF00ABC5, 0xFF00ABC5, 0xFFAD0101/*, 0xFFDE5900*/]; // The colors used for the background
-	var selectableCharactersOffsets:Array<Array<Int>> = [[10, 10], [35, 10], [10, 10]/*, [10, 10]*/]; // [x, y]
+	var selectableCharacters:Array<String> = ['bf', 'bf-christmas', 'MellyBF', 'JBBF']; // Currently Selectable characters
+	var selectableCharactersNames:Array<String> = ['Default Character', 'Week 5 Boyfriend', 'Boyfriend but Black (Melly)', 'MultiKey Guy']; // Characters names (i demand them to be actually funny and anyone who says otherwise probably isn't black/mexican - melly)
+	var selectableCharactersColors:Array<FlxColor> = [0xFF00ABC5, 0xFF00ABC5, 0xFFAD0101, 0xFFDE5900]; // The colors used for the background
+	var selectableCharactersOffsets:Array<Array<Int>> = [[10, 10], [35, 10], [10, 20], [10, 0]]; // [x, y]
 	
 	// Unlockable characters
-	var unlockableChars:Array<String> = ['pico-player', 'tankman-player']; // Unlockable Characters
-	var unlockableCharsNames:Array<String> = ['Pico', 'Tankman']; // Names of unlockable Characters
-	var unlockableCharsColors:Array<FlxColor> = [0xFF00DD0F, 0xFF6C6C6C]; // The colors used for the background
-	var unlockableCharactersOffsets:Array<Array<Int>> = [[-5, -30], [25, 0]]; // [x, y]
+	var unlockableChars:Array<String> = ['pico-player', 'tankman-player', 'AEBF']; // Unlockable Characters
+	var unlockableCharsNames:Array<String> = ['Pico', 'Tankman', 'Boyfriend but Amazing']; // Names of unlockable Characters
+	var unlockableCharsColors:Array<FlxColor> = [0xFF00DD0F, 0xFF6C6C6C, 0xFF028C02]; // The colors used for the background
+	var unlockableCharactersOffsets:Array<Array<Int>> = [[-5, -30], [25, 0], [10, 10]]; // [x, y]
 	
 	// This is the characters that actually appear on the menu
 	var unlockedCharacters:Array<String> = [];
@@ -64,7 +64,8 @@ class CharMenu extends MusicBeatState
 	*/
 	var achievementUnlocks:Array<Array<String>> = [
 		["week7_nomiss", "1"], 
-		["week3_nomiss", "0"]
+		["week3_nomiss", "0"],
+		["modinstalled", "2"]
 	];
 
 	// Folder locations
@@ -96,8 +97,6 @@ class CharMenu extends MusicBeatState
 	var charXoffset:Int = 500;
 	var tweenTime:Float = 0.35;
 	var destinationTweens:Array<FlxTween> = [null];
-	
-	public static var songToLoad:SwagSong;
 
 	// Use for offseting
 	#if debug
@@ -286,7 +285,6 @@ class CharMenu extends MusicBeatState
 
 				new FlxTimer().start(1, function(tmr:FlxTimer)
 				{
-					PlayState.SONG = songToLoad;
 					if (unlockedCharacters[curSelected] != PlayState.SONG.player1) PlayState.SONG.player1 = daSelected;
 					LoadingState.loadAndSwitchState(new PlayState());
 				});

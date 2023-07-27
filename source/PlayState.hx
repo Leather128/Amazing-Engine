@@ -4372,7 +4372,7 @@ class PlayState extends MusicBeatState
 					// 	daNote.mania = mania;
 					// }
 
-					var angleDir:Float = strum.direction != 90 ? (strum.direction * Math.PI / 180) : 1.57; // approx 1.57079632679
+					var angleDir:Float = strum.direction != 90 ? (strum.direction * Math.PI / 180.0) : 1.57; // approx 1.57079632679
 
 					if (daNote.isSustainNote)
 						daNote.angle = strum.direction - 90;

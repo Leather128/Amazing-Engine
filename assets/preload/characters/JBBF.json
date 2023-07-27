@@ -1,103 +1,112 @@
 {
 	"animations": [
 		{
-			"loop": false,
+			"image": "characters/JBBF",
 			"offsets": [
 				-5,
 				0
 			],
+			"indices": [],
+			"fps": 24,
 			"anim": "idle",
-			"fps": 24,
-			"name": "JBbf idle",
-			"indices": []
+			"loop": false,
+			"name": "BF idle dance"
 		},
 		{
-			"loop": false,
+			"image": "characters/JBBF",
 			"offsets": [
-				5,
-				-6
+				18,
+				-8
 			],
-			"anim": "singLEFT",
+			"indices": [],
 			"fps": 24,
-			"name": "JBbf sing left",
-			"indices": []
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "BF NOTE LEFT0"
 		},
 		{
-			"loop": false,
+			"image": "characters/JBBF",
 			"offsets": [
 				-20,
 				-51
 			],
-			"anim": "singDOWN",
+			"indices": [],
 			"fps": 24,
-			"name": "JBbf sing down",
-			"indices": []
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "BF NOTE DOWN0"
 		},
 		{
-			"loop": false,
+			"image": "characters/JBBF",
 			"offsets": [
 				-46,
 				27
 			],
-			"anim": "singUP",
+			"indices": [],
 			"fps": 24,
-			"name": "JBbf sing up",
-			"indices": []
+			"anim": "singUP",
+			"loop": false,
+			"name": "BF NOTE UP0"
 		},
 		{
-			"loop": false,
+			"image": "characters/JBBF",
 			"offsets": [
 				-48,
 				-7
 			],
+			"indices": [],
+			"fps": 24,
 			"anim": "singRIGHT",
-			"fps": 24,
-			"name": "JBbf sing right",
-			"indices": []
+			"loop": false,
+			"name": "BF NOTE RIGHT0"
 		},
 		{
-			"loop": false,
-			"offsets": [
-				7,
-				19
-			],
-			"anim": "singLEFTmiss",
-			"fps": 24,
-			"name": "JBbf left miss",
-			"indices": []
-		},
-		{
-			"loop": false,
+			"image": "characters/JBBF",
 			"offsets": [
 				-15,
 				-19
 			],
-			"anim": "singDOWNmiss",
+			"indices": [],
 			"fps": 24,
-			"name": "JBbf down miss",
-			"indices": []
+			"anim": "singDOWNmiss",
+			"loop": false,
+			"name": "BF NOTE DOWN MISS"
 		},
 		{
-			"loop": false,
+			"image": "characters/JBBF",
 			"offsets": [
 				-46,
 				27
 			],
-			"anim": "singUPmiss",
+			"indices": [],
 			"fps": 24,
-			"name": "JBbf up miss",
-			"indices": []
+			"anim": "singUPmiss",
+			"loop": false,
+			"name": "BF NOTE UP MISS"
 		},
 		{
-			"loop": false,
+			"image": "characters/JBBF",
 			"offsets": [
 				-44,
 				22
 			],
-			"anim": "singRIGHTmiss",
+			"indices": [],
 			"fps": 24,
-			"name": "JBbf right miss",
-			"indices": []
+			"anim": "singRIGHTmiss",
+			"loop": false,
+			"name": "BF NOTE RIGHT MISS"
+		},
+		{
+			"image": "characters/JBBF",
+			"offsets": [
+				7,
+				19
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFTmiss",
+			"loop": false,
+			"name": "BF NOTE LEFT MISS"
 		}
 	],
 	"no_antialiasing": false,
